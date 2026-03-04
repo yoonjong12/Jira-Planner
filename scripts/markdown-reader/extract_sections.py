@@ -50,7 +50,9 @@ def extract_section(lines: list[str], section_name: str) -> str | None:
     return "".join(lines[start_idx:]) if start_idx is not None else None
 
 
-def extract_sections(markdown_path: str, section_names: list[str]) -> dict[str, str | None]:
+def extract_sections(
+    markdown_path: str, section_names: list[str]
+) -> dict[str, str | None]:
     """Extract multiple sections in one call.
 
     Args:
@@ -71,7 +73,10 @@ def extract_sections(markdown_path: str, section_names: list[str]) -> dict[str, 
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} <markdown_file> <section1> [section2] ...", file=sys.stderr)
+        print(
+            f"Usage: {sys.argv[0]} <markdown_file> <section1> [section2] ...",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     markdown_path = sys.argv[1]
