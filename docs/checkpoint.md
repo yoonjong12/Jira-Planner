@@ -57,7 +57,7 @@ Write first — auto-loads on next session, fail-safe if session crashes mid-che
 ### Step 2. status.md
 
 Edit single rows — no full rewrite needed.
-Path: `.claude/skills/jira-planner/space/{epic-id}/{story-id}/status.md`
+Path: `.claude/jira-planner/space/{epic-id}/{story-id}/status.md`
 
 - Update Status column (`pending` → `in_progress` / `completed`)
 - Add commit Hash for completed nanotasks

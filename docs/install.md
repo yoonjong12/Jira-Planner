@@ -63,7 +63,7 @@ jq --arg email "$EMAIL" --arg token "$API_TOKEN" '
 Also install `markdown-reader` skill to the user's skills directory:
 
 ```bash
-cp -r .claude/skills/jira-planner/scripts/markdown-reader ~/.claude/skills/
+cp -r scripts/markdown-reader ~/.claude/skills/
 ```
 
 **Say to user:**
@@ -122,7 +122,7 @@ jira_search({
 Run the installer:
 
 ```bash
-bash .claude/skills/jira-planner/scripts/install-hooks.sh
+bash scripts/install-hooks.sh
 ```
 
 This sets up:

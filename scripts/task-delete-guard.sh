@@ -68,7 +68,7 @@ jq -n '{
     hookSpecificOutput: {
         hookEventName: "PreToolUse",
         permissionDecision: "allow",
-        permissionDecisionReason: "[MIND-JIRA] Task completed. Remember: update status.md row (Status → completed, Hash → commit hash)."
+        permissionDecisionReason: "[JIRA-PLANNER] Task completed. Remember: update status.md row (Status → completed, Hash → commit hash)."
     }
 }'
 exit 0

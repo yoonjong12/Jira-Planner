@@ -31,7 +31,7 @@ if [ -n "$MISSING" ]; then
         hookSpecificOutput: {
             hookEventName: "PreToolUse",
             permissionDecision: "deny",
-            permissionDecisionReason: ("[MIND-JIRA] Jira description missing required sections: " + $missing + ". Template: h2. Context / h2. Objective / h2. Deliverables / h2. Acceptance Criteria")
+            permissionDecisionReason: ("[JIRA-PLANNER] Jira description missing required sections: " + $missing + ". Template: h2. Context / h2. Objective / h2. Deliverables / h2. Acceptance Criteria")
         }
     }'
     exit 0
