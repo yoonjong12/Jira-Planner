@@ -1,0 +1,24 @@
+{
+  "name": "jira-planner",
+  "owner": {
+    "name": "yoonjong12"
+  },
+  "metadata": {
+    "description": "Jira workflow automation for Claude Code — Epic, Story, Subtask, Nanotask planning"
+  },
+  "plugins": [
+    {
+      "name": "jira-planner",
+      "source": "./plugin",
+      "description": "Jira workflow automation for Epic-Story-Subtask planning and tracking",
+      "version": "1.0.0",
+      "author": {
+        "name": "yoonjong12"
+      },
+      "repository": "https://github.com/yoonjong12/Jira-Planner",
+      "license": "MIT",
+      "category": "productivity",
+      "tags": ["jira", "planning", "workflow"]
+    }
+  ]
+}
