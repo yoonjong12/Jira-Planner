@@ -1,0 +1,10 @@
+{
+  "name": "jira-planner",
+  "description": "Jira workflow automation for Epic-Story-Subtask planning and tracking in Claude Code",
+  "author": {
+    "name": "yoonjong12"
+  },
+  "repository": "https://github.com/yoonjong12/Jira-Planner",
+  "license": "MIT",
+  "keywords": ["jira", "planning", "workflow", "epic", "story", "subtask"]
+}

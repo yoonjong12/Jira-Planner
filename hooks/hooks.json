@@ -1,0 +1,52 @@
+{
+  "description": "Jira Planner guard hooks for workflow enforcement",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "TaskCreate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/subtask-to-nanotask-guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "TaskUpdate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/task-delete-guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__atlassian__jira_create_issue",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/jira-description-guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__atlassian__jira_update_issue",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/jira-description-guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/plan-format-validator.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

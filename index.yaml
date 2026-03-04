@@ -1,0 +1,91 @@
+# Jira Planner Workflow Index
+
+prerequisites:
+  - name: Installation
+    summary: Set up Jira MCP and connect to MindAI/WAO workspace
+    path: docs/install.md
+    description: >
+      Guide to install Atlassian MCP, authenticate with mindai.atlassian.net,
+      and verify connection to WG Agent Optimization (WAO) project.
+
+  - name: Uninstall
+    summary: Remove all Jira Planner config and restore pre-install state
+    path: docs/uninstall.md
+    description: >
+      Remove MCP servers, hooks, deny rules, and task persistence settings.
+      Restores config files to their pre-Jira Planner state.
+      Options: --keep-mcp, --keep-tasks for selective removal.
+
+workflows:
+  entrypoint: Start
+
+  actions:
+    - name: Start
+      summary: User profiling and workflow routing
+      path: docs/start.md
+      routes_to: [EpicToStory, StoryToSubtask, SubtaskToNanotask]
+      description: >
+        Entry point when user invokes /jira-planner:
+        1. User Profiling - Check in-progress work
+        2. Confirm project (default: WAO)
+        3. Show active epics
+        4. Route to selected workflow
+
+    - name: EpicToStory
+      summary: Epic → Story planning
+      path: docs/epic_to_story.md
+      level: Epic
+      creates: Story
+      blocking_steps: [plan_confirmation]
+      description: >
+        Plan Stories under an Epic through iterative refinement:
+        1. Fetch Epic
+        2. Discuss story ideas
+        3. Structure plan (Objectives/Scope/Deliverables)
+        4. Create Jira Stories
+
+    - name: StoryToSubtask
+      summary: Story → Subtask planning
+      path: docs/story_to_subtask.md
+      level: Story
+      creates: Subtask
+      blocking_steps: [user_discussion, user_approval]
+      description: >
+        Create Subtasks through collaborative discussion:
+        1. Context Gathering
+        2. Identify subtask candidate
+        3. Collaborative Planning (MANDATORY)
+        4. Create Jira Subtask (after approval)
+
+    - name: SubtaskToNanotask
+      summary: Subtask → Nanotasks → Claude Code tasks
+      path: docs/subtask_to_nanotask.md
+      level: Subtask
+      creates: Nanotask (→ Claude Code Task)
+      blocking_steps: [final_plan_review]
+      description: >
+        Convert Subtasks to Claude Code tasks with nanotask-level planning:
+        0. Session Detection - warm/cold routing
+        1. Select Story + Sync - Auto-detect progress from disk
+        2. Plan & Write - Explore, design, write all plan files
+        3. Approval - User approves plan
+        4. Task Creation - TaskCreate + TASK_LIST_ID
+        5. Implementation - Execute nanotask plans (commit/analysis/docs)
+        6. Close & Report - Jira comments + status transitions
+      notes: >
+        Requires reading plan_mode.md via MCP.
+        Nanotask types: commit (code change), analysis (investigation), docs (documentation).
+
+    - name: Checkpoint
+      summary: Session state preservation for fast resume
+      path: docs/checkpoint.md
+      description: >
+        Save session state (MEMORY.md, status.md, CC Tasks) for minimal-token resume.
+        Invoke with `/jira-planner checkpoint` when needed.
+
+# Hierarchy: Epic > Story > Subtask > Nanotask
+# Each workflow operates at its named level:
+#   - EpicToStory:       Epic level    → creates Stories
+#   - StoryToSubtask:    Story level   → creates Subtasks
+#   - SubtaskToNanotask: Subtask level → creates Nanotasks (→ Claude Code Tasks)
+# Nanotask types: commit (code), analysis (investigation), docs (documentation)
