@@ -18,7 +18,7 @@ Plan Stories under an Epic with structured guidance.
 
 ### Step 0: Select Epic
 
-**Skip if Epic already provided via args or Start workflow context.**
+**Skip if Epic already provided via args.**
 
 ```typescript
 jira_search({

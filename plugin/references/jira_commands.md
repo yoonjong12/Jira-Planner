@@ -212,37 +212,7 @@ ToolSearch({ query: "select:mcp__atlassian__jira_get_transitions" }) // Get tran
 
 ## Workflow-Specific Patterns
 
-### Start Workflow
-```typescript
-// Step 1: User Profiling (Smart Context)
-// Get user info
-jira_get_user_profile({
-  user_identifier: "yoonjong@wisdomgraph.ai"
-})
-
-// Find user's in-progress work
-jira_search({
-  jql: "project = WAO AND assignee = currentUser() AND status IN (\"In Progress\", \"진행 중\") ORDER BY updated DESC",
-  limit: 3,
-  fields: "summary,status,issuetype,parent"
-})
-// → If found: Offer quick resume
-// → If not found: Continue to Step 1
-
-// Step 1: Get recent active epics (if no user work found)
-jira_search({
-  jql: "project = WAO AND type = Epic AND status IN (Open, \"In Progress\") ORDER BY updated DESC",
-  limit: 5,
-  fields: "summary,status,updated"
-})
-
-// Step 2: Present to user, let them choose
-
-// Step 3: Fetch full details only after selection
-jira_get_issue({ issue_key: "WAO-180" })
-```
-
-### Kickoff Workflow
+### EpicToStory Workflow
 ```typescript
 // 1. Get epic (from boot context or user input)
 jira_get_issue({ issue_key: epicKey })

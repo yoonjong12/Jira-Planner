@@ -14,7 +14,7 @@ Create subtasks for an existing Story through collaborative discussion.
 
 ### Step 0: Select Story
 
-**Skip if Story already provided via args or Start workflow context.**
+**Skip if Story already provided via args.**
 
 ```typescript
 jira_search({

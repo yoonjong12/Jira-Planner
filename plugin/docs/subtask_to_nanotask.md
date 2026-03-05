@@ -251,7 +251,7 @@ Full planning flow: select story → explore → write plans → approve → cre
 
 ### Select Story
 
-**Skip if Story already provided via args or Start workflow context.**
+**Skip if Story already provided via args.**
 
 ```typescript
 jira_search({

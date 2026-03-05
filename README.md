@@ -6,7 +6,8 @@ Claude Code plugin for Jira workflow automation — Epic, Story, Subtask, and Na
 
 | Command | Description |
 |---------|-------------|
-| `/jira-planner:start` | Entry point — user profiling and workflow routing |
+| `/jira-planner:onboarding` | Resume work — loads plan, status, references |
+| `/jira-planner:help` | Show available skills and getting started guide |
 | `/jira-planner:epic-to-story` | Plan Stories under an Epic |
 | `/jira-planner:story-to-subtask` | Create Subtasks for a Story |
 | `/jira-planner:subtask-to-nanotask` | Convert Subtasks to Claude Code tasks |
