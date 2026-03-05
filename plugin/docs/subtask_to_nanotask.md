@@ -112,8 +112,9 @@ Blueprint — rarely modified after planning. Updated only when adding nanotasks
 ## Dependency Chain
 [Subtask/nanotask dependency graph]
 
-## Critical Files
-[3-5 key files]
+## MUST READ
+[Paths to reports, blueprints, or reference docs essential for this story's context.
+These files are auto-loaded by /jira-planner:onboarding at session start.]
 
 ## Decisions
 [Architectural choices made during planning/implementation]
@@ -641,11 +642,12 @@ Uses disk-based context, so works regardless of session state.
 - [ ] Nanotask names are specific (include file/module names)
 - [ ] Type `commit` has Diffs with file:line + Verify command
 - [ ] Dependencies specified
+- [ ] `## MUST READ` section lists reference docs (reports, blueprints)
 - [ ] All files exist on disk (`ls` passed)
 
 **Approval:**
 - [ ] Tree summary with types shown
-- [ ] Dependency chain + critical files listed
+- [ ] Dependency chain + MUST READ references listed
 - [ ] User explicitly said "Approve"
 
 **Task Creation:**

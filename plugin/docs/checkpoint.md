@@ -33,6 +33,8 @@ Write first — auto-loads on next session, fail-safe if session crashes mid-che
 
 ```markdown
 # Context
+active_story: {epic_key}/{story_key}
+
 ## Working Space
 - Current epic/story summary (1-2 lines)
 - Previous session summary (what was done, key findings, 3-5 lines max)
@@ -46,6 +48,10 @@ Write first — auto-loads on next session, fail-safe if session crashes mid-che
 - Open questions that need resolution
 - Do NOT include completed items or stable decisions
 ```
+
+**MANDATORY:** The `active_story:` field MUST be present directly under `# Context`.
+Format: `{epic_key}/{story_key}` (e.g., `WAO-303/WAO-310`).
+This is parsed by `/jira-planner:onboarding` to locate the workspace directory.
 
 **Compaction rules:**
 - **Target:** Under 50 lines. Anything stable belongs in code/config, not memory.

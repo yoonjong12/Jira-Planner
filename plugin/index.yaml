@@ -17,19 +17,19 @@ prerequisites:
       Options: --keep-mcp, --keep-tasks for selective removal.
 
 workflows:
-  entrypoint: Start
-
   actions:
-    - name: Start
-      summary: User profiling and workflow routing
-      path: docs/start.md
-      routes_to: [EpicToStory, StoryToSubtask, SubtaskToNanotask]
+    - name: Onboarding
+      summary: Deterministic context injection for session resume
+      path: docs/onboarding.md
       description: >
-        Entry point when user invokes /jira-planner:
-        1. User Profiling - Check in-progress work
-        2. Confirm project (default: WAO)
-        3. Show active epics
-        4. Route to selected workflow
+        Loads current work context from MEMORY.md, plan.md, status.md, and MUST READ references.
+        No agentic routing — deterministic script that always runs the same steps.
+
+    - name: Help
+      summary: Show available skills and getting started guide
+      description: >
+        Lists all available /jira-planner skills with purpose and when-to-use.
+        For first-time users who don't know where to start.
 
     - name: EpicToStory
       summary: Epic → Story planning

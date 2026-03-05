@@ -38,6 +38,7 @@ if [[ "$FILE_PATH" == */plan.md ]]; then
     MISSING=""
 
     echo "$CONTENT" | grep -q "## Nanotasks" || MISSING="$MISSING ## Nanotasks,"
+    echo "$CONTENT" | grep -q "## MUST READ" || MISSING="$MISSING ## MUST READ,"
 
     if [ -n "$MISSING" ]; then
         jq -n --arg missing "$MISSING" '{
