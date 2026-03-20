@@ -298,10 +298,33 @@ planExists?
 ```text
 1. UNDERSTAND: Extract objectives from each Jira subtask
 2. EXPLORE: Investigate codebase (parallel agents for 2+ subtasks)
-3. DESIGN: Break each subtask into nanotasks, assign types (commit/analysis/docs)
-4. WRITE: Create all plan files in one pass
-5. VERIFY: ls to confirm files exist (CP1)
+3. VALIDATE SCOPE: Cross-reference design docs (see below)
+4. DESIGN: Break each subtask into nanotasks, assign types (commit/analysis/docs)
+5. WRITE: Create all plan files in one pass
+6. VERIFY: ls to confirm files exist (CP1)
 ```
+
+**VALIDATE SCOPE (mandatory when design docs exist):**
+
+If MUST READ or subtask references contain a design doc:
+
+```text
+1. Read the design doc fully
+2. List every deliverable/component the design requires
+3. Map each deliverable to a nanotask
+4. If a deliverable has no nanotask → it is a gap
+5. Present coverage table to user before proceeding to DESIGN:
+
+   | Design doc deliverable | Nanotask | Status |
+   |------------------------|----------|--------|
+   | ROI benchmark harness  | 345-5    | ✓      |
+   | LLM feedback generator | —        | GAP    |
+   | Noise skill injection  | —        | GAP    |
+
+6. Gaps must be resolved: add nanotask, defer to another subtask, or mark out-of-scope with user approval
+```
+
+Skipping this step when design docs exist violates CP1.
 
 **Parallel exploration** (recommended for 2+ subtasks):
 
@@ -643,6 +666,7 @@ Uses disk-based context, so works regardless of session state.
 - [ ] Type `commit` has Diffs with file:line + Verify command
 - [ ] Dependencies specified
 - [ ] `## MUST READ` section lists reference docs (reports, blueprints)
+- [ ] If design docs exist in MUST READ: every deliverable maps to a nanotask (scope coverage verified)
 - [ ] All files exist on disk (`ls` passed)
 
 **Approval:**
