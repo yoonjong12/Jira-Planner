@@ -11,7 +11,7 @@
       "name": "jira-planner",
       "source": "./plugin",
       "description": "Jira workflow automation for Epic-Story-Subtask planning and tracking",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": {
         "name": "yoonjong12"
       },
