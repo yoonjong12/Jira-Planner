@@ -86,9 +86,8 @@ Use Plan Structure from `references/common_patterns.md#plan-structure`.
 **Review criteria:**
 
 - [ ] Objectives are clear and measurable
-- [ ] Scope is explicit (in/out)
+- [ ] Scope is explicit
 - [ ] Deliverables are concrete
-- [ ] Timeline is realistic
 - [ ] "Done" is unambiguous
 
 **Iterative process:**
@@ -116,9 +115,12 @@ Same rigor applies - each subtask needs Objectives/Scope/Deliverables.
 
 1. Save to `space/{epic-id}/story.md`
 2. Present final plan
-3. Request confirmation
-4. Create Jira Stories with Epic link
-5. Confirm creation with issue keys
+3. Ask user for start date and due date for each story
+4. Request confirmation
+5. Create Jira Stories with Epic link. Always:
+   - Set `assignee` to the current user
+   - Set `customfield_10025` (start date) and `duedate` from user input
+6. Confirm creation with issue keys
 
 ---
 
@@ -132,19 +134,16 @@ Same rigor applies - each subtask needs Objectives/Scope/Deliverables.
 - Implement PoC based on GH's SKILL pattern
 
 **Scope**
-- Included: Strategy structure, generation, injection, evaluation lifecycle
-- Excluded: Integration with existing MEGA components (separate story)
+- Strategy structure, generation, injection, evaluation lifecycle
+- Excludes integration with existing MEGA components (separate story)
 
 **Deliverables**
 - Workflow strategy design document (10-15 pages)
 - PR: Merge workflow-strategy branch to main
 - Working PoC demonstrating strategy injection
-
-**Timeline**
-- Start: 2026-02-01
-- End: 2026-02-13
-- Duration: 2 weeks (reasonable for PoC + documentation)
 ```
+
+**Note:** Timeline (start date, due date) is set via Jira fields (`customfield_10025`, `duedate`), not in the description.
 
 ---
 
@@ -179,7 +178,7 @@ Same rigor applies - each subtask needs Objectives/Scope/Deliverables.
 | Vague objectives | "Improve the system" | "Reduce latency by 30% through caching" |
 | Missing scope | "Work on integration" | "Integrate wisdom graph into MEGA. Excludes: performance tuning, UI changes" |
 | Non-concrete deliverables | "Better code" | "PR merging refactored wisdom graph module + integration test suite with >80% coverage" |
-| Unrealistic timelines | "Rewrite entire system in 3 days" | "Refactor core module (500 LOC) in 1 week" |
+| Unrealistic schedule | "Rewrite entire system in 3 days" | "Refactor core module (500 LOC) in 1 week" |
 
 ---
 

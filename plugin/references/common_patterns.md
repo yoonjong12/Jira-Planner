@@ -57,6 +57,8 @@ Before creating any Jira issue, verify:
 - [ ] Objectives: What will be achieved?
 - [ ] Scope: What's included/excluded?
 - [ ] Deliverables: Concrete outputs?
+- [ ] Assignee: Set to current user
+- [ ] Schedule: Start date and due date set via Jira fields
 - [ ] User explicitly approved?
 
 ## Plan Structure

@@ -127,11 +127,11 @@ How urgent is this subtask?
 
 ```text
 When should this subtask be worked on?
-- Start date: [YYYY-MM-DD]
-- Due date: [YYYY-MM-DD]
 - Blocked by: [Which subtask must finish before this can start?]
 - Blocks: [Which subtask depends on this one's completion?]
 ```
+
+Ask user for start date and due date. These are set via Jira fields (`customfield_10025`, `duedate`), not in the description.
 
 **When planning multiple subtasks**, build the full dependency chain upfront:
 
@@ -177,11 +177,11 @@ Deliverables:
 - [Artifact 1]
 - [Artifact 2]
 
-**Schedule:** [Start date] - [Due date]
 **Priority:** [0/1/2/3]
 **Blocked by:** [WAO-XXX] (if any)
 **Blocks:** [WAO-YYY] (if any)
-**Assignee:** [User or unassigned]
+**Start date:** [YYYY-MM-DD] (Jira field)
+**Due date:** [YYYY-MM-DD] (Jira field)
 
 Does this look correct? Please confirm or suggest changes.
 ```
@@ -224,13 +224,13 @@ jira_create_issue({
   project_key: "WAO",
   issue_type: "Subtask",
   summary: "Research X",
-  description: "Structured description (Objectives/Scope/Deliverables/Schedule)",
+  description: "Structured description (Objectives/Scope/Deliverables)",
+  assignee: "current user email",
   additional_fields: {
     "parent": "WAO-251",
     "priority": {"name": "1"},
     "customfield_10025": "2026-02-09",  // Start date
-    "duedate": "2026-02-10",
-    "assignee": {"id": "accountId"}
+    "duedate": "2026-02-10"
   }
 })
 // → WAO-AAA created
@@ -295,7 +295,7 @@ Before calling `jira_create_issue`, verify:
 - [ ] Have you confirmed schedule (start date + due date) for each subtask?
 - [ ] Have you confirmed dependency chain (Blocks/Blocked by) between subtasks?
 - [ ] Has user explicitly approved the content?
-- [ ] Is the description structured (Objectives/Scope/Deliverables/Schedule)?
+- [ ] Is the description structured (Objectives/Scope/Deliverables)?
 
 **If any checkbox is unchecked, DO NOT create the subtask. Return to Step 3.**
 
@@ -415,10 +415,10 @@ Scope:
 Deliverables:
 - Test suite (pytest), benchmark report
 
-**Schedule:** 2/9 - 2/11
 **Priority:** 1 (Critical)
 **Blocked by:** WAO-265 (Integrate), WAO-266 (Refactor)
-**Assignee:** You
+**Start date:** 2026-02-09 (Jira field)
+**Due date:** 2026-02-11 (Jira field)
 
 Existing chain with new subtask:
 WAO-264 (2/5-7) ──→ WAO-265 (2/7-9) ──→ WAO-NEW (2/9-11)
