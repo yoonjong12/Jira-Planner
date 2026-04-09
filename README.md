@@ -17,12 +17,9 @@ Claude Code plugin for Jira workflow automation — Epic, Story, Subtask, and Na
 
 ## Installation
 
-```bash
-# Add marketplace
-/plugin marketplace add https://github.com/yoonjong12/Jira-Planner.git
-
-# Install plugin
-/plugin install jira-planner
+```
+/plugin marketplace add yoonjong12/Jira-Planner
+/plugin install jira-planner@jira-planner
 ```
 
 After installation, run `/jira-planner:install` to configure Atlassian MCP and guardrail hooks.
