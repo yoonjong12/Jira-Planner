@@ -255,7 +255,7 @@ jira_create_issue_link({
 })
 
 // ── Phase 3: Update Story description with subtask refs ───────
-// ⚠️ DEFERRED TOOL: Must call ToolSearch("select:mcp__atlassian__jira_update_issue") first!
+// ⚠️ DEFERRED TOOL: Must call ToolSearch("select:mcp__plugin_atlassian_atlassian__editJiraIssue") first!
 jira_update_issue({
   issue_key: "WAO-251",
   fields: { "description": "Updated description with subtask references" }

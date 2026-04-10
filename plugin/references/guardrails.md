@@ -150,7 +150,7 @@ exit 0
         ]
       },
       {
-        "matcher": "mcp__atlassian__jira_create_issue",
+        "matcher": "mcp__plugin_atlassian_atlassian__createJiraIssue",
         "hooks": [
           {
             "type": "command",
@@ -159,7 +159,7 @@ exit 0
         ]
       },
       {
-        "matcher": "mcp__atlassian__jira_update_issue",
+        "matcher": "mcp__plugin_atlassian_atlassian__editJiraIssue",
         "hooks": [
           {
             "type": "command",

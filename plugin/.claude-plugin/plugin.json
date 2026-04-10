@@ -1,6 +1,6 @@
 {
   "name": "jira-planner",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Jira workflow automation for Epic-Story-Subtask planning and tracking in Claude Code",
   "author": {
     "name": "yoonjong12"

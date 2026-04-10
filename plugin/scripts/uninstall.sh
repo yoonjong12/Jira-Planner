@@ -91,12 +91,12 @@ fi
 # --- 2. Remove deny rules from .claude/settings.local.json ---
 echo ""
 if [ -f "$LOCAL_SETTINGS_FILE" ]; then
-    JIRA_DENY_COUNT=$(jq '[.permissions.deny // [] | .[] | select(test("mcp__atlassian__jira_(transition|update|delete)_issue"))] | length' "$LOCAL_SETTINGS_FILE" 2>/dev/null || echo "0")
+    JIRA_DENY_COUNT=$(jq '[.permissions.deny // [] | .[] | select(test("mcp__plugin_atlassian_atlassian__(transitionJiraIssue|editJiraIssue)"))] | length' "$LOCAL_SETTINGS_FILE" 2>/dev/null || echo "0")
 
     if [ "$JIRA_DENY_COUNT" -gt 0 ]; then
         echo "[2/4] Remove Jira Planner deny rules from .claude/settings.local.json"
         if ! $DRY_RUN; then
-            jq '.permissions.deny |= [.[] | select(test("mcp__atlassian__jira_(transition|update|delete)_issue") | not)]' \
+            jq '.permissions.deny |= [.[] | select(test("mcp__plugin_atlassian_atlassian__(transitionJiraIssue|editJiraIssue)") | not)]' \
                 "$LOCAL_SETTINGS_FILE" > "${LOCAL_SETTINGS_FILE}.tmp"
             mv "${LOCAL_SETTINGS_FILE}.tmp" "$LOCAL_SETTINGS_FILE"
         fi

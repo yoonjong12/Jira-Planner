@@ -1,6 +1,6 @@
 ---
 description: "Convert Subtasks to Claude Code tasks with nanotask-level planning and execution."
-allowed-tools: Read, Bash, Write, Edit, mcp__atlassian__jira_get_issue, mcp__atlassian__jira_search, mcp__atlassian__jira_create_issue, mcp__atlassian__jira_update_issue, mcp__atlassian__jira_add_comment, mcp__atlassian__jira_transition_issue, AskUserQuestion, TaskCreate, TaskUpdate, TaskList, TaskGet
+allowed-tools: Read, Bash, Write, Edit, mcp__plugin_atlassian_atlassian__getJiraIssue, mcp__plugin_atlassian_atlassian__searchJiraIssuesUsingJql, mcp__plugin_atlassian_atlassian__createJiraIssue, mcp__plugin_atlassian_atlassian__editJiraIssue, mcp__plugin_atlassian_atlassian__addCommentToJiraIssue, mcp__plugin_atlassian_atlassian__transitionJiraIssue, AskUserQuestion, TaskCreate, TaskUpdate, TaskList, TaskGet
 ---
 
 Read and follow the SubtaskToNanotask workflow at `docs/subtask_to_nanotask.md` in this plugin directory.

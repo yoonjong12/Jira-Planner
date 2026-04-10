@@ -154,9 +154,8 @@ Add deny rules to `.claude/settings.local.json`:
 
 ```bash
 jq '.permissions.deny += [
-  "mcp__atlassian__jira_transition_issue",
-  "mcp__atlassian__jira_update_issue",
-  "mcp__atlassian__jira_delete_issue"
+  "mcp__plugin_atlassian_atlassian__transitionJiraIssue",
+  "mcp__plugin_atlassian_atlassian__editJiraIssue"
 ] | .permissions.deny |= unique' .claude/settings.local.json > .claude/settings.local.json.tmp \
   && mv .claude/settings.local.json.tmp .claude/settings.local.json
 ```

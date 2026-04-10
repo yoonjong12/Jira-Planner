@@ -47,7 +47,7 @@ HOOKS_CONFIG='{
       ]
     },
     {
-      "matcher": "mcp__atlassian__jira_create_issue",
+      "matcher": "mcp__plugin_atlassian_atlassian__createJiraIssue",
       "hooks": [
         {
           "type": "command",

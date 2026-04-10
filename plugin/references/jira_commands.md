@@ -4,48 +4,52 @@ Quick reference for token-efficient Jira MCP usage in jira-planner workflows.
 
 ## Core Principles
 
-1. **API Token auth** - Permanent auth via `mcp-atlassian` (sooperset). No OAuth expiry.
-2. **Use JQL for filtering** - More efficient than fetching all then filtering
-3. **Limit result size** - Always set `limit` parameter appropriately
+1. **OAuth via Atlassian Plugin** - Auth handled by `atlassian@claude-plugins-official` plugin. No local MCP server needed.
+2. **cloudId required** - All tools require `cloudId`. Use site URL (e.g., `mindai.atlassian.net`) or UUID.
+3. **Use JQL for filtering** - More efficient than fetching all then filtering
+4. **Limit result size** - Always set `maxResults` parameter appropriately
+5. **Markdown format** - Use `responseContentFormat: "markdown"` for readable output
 
 ## Quick Reference
 
 ### User Info
 
 ```typescript
-// Get current user profile
-jira_get_user_profile({
-  user_identifier: "yoonjong@wisdomgraph.ai"
+// Get current user info
+atlassianUserInfo({})
+
+// Lookup user account ID
+lookupJiraAccountId({
+  cloudId: "mindai.atlassian.net",
+  searchString: "yoonjong"
 })
-// Output: displayName, emailAddress, accountId, etc.
-
-// ⚠️ WARNING: Avoid unless absolutely necessary (large output)
-jira_get_all_projects()
 ```
-
-**Best Practice:** Only call project discovery during installation or boot.
 
 ### Search & Discovery
 
 ```typescript
 // Find active epics in WAO project
-jira_search({
+searchJiraIssuesUsingJql({
+  cloudId: "mindai.atlassian.net",
   jql: "project = WAO AND type = Epic AND status IN (Open, \"In Progress\") ORDER BY updated DESC",
-  limit: 5,
-  fields: "summary,status,updated"
+  maxResults: 5,
+  fields: ["summary", "status", "updated"],
+  responseContentFormat: "markdown"
 })
 
 // Find stories under specific epic
-jira_search({
+searchJiraIssuesUsingJql({
+  cloudId: "mindai.atlassian.net",
   jql: "parent = WAO-180 AND type = Story",
-  limit: 20,
-  fields: "summary,status,assignee"
+  maxResults: 20,
+  fields: ["summary", "status", "assignee"]
 })
 
 // Find my assigned issues
-jira_search({
+searchJiraIssuesUsingJql({
+  cloudId: "mindai.atlassian.net",
   jql: "project = WAO AND assignee = currentUser() AND status != Done",
-  limit: 10
+  maxResults: 10
 })
 ```
 
@@ -53,67 +57,70 @@ jira_search({
 
 ```typescript
 // Get single issue with full details
-jira_get_issue({
-  issue_key: "WAO-180",
-  fields: "summary,description,status,assignee,subtasks"
+getJiraIssue({
+  cloudId: "mindai.atlassian.net",
+  issueIdOrKey: "WAO-180",
+  fields: ["summary", "description", "status", "assignee", "subtasks"],
+  responseContentFormat: "markdown"
 })
 
 // Create Epic
-jira_create_issue({
-  project_key: "WAO",
-  issue_type: "Epic",
+createJiraIssue({
+  cloudId: "mindai.atlassian.net",
+  projectKey: "WAO",
+  issueTypeName: "Epic",
   summary: "Epic title",
   description: "Epic description in Markdown",
+  contentFormat: "markdown",
   additional_fields: {
     "customfield_10011": "Epic Name"
   }
 })
 
 // Create Story under Epic
-jira_create_issue({
-  project_key: "WAO",
-  issue_type: "Story",
+createJiraIssue({
+  cloudId: "mindai.atlassian.net",
+  projectKey: "WAO",
+  issueTypeName: "Story",
   summary: "Story title",
   description: "Story description",
-  additional_fields: {
-    "parent": "WAO-180"  // ⚠️ String, NOT {"key": "WAO-180"}
-  }
+  contentFormat: "markdown",
+  parent: "WAO-180"
 })
 
 // Create Subtask under Story
-jira_create_issue({
-  project_key: "WAO",
-  issue_type: "Subtask",  // ⚠️ "Subtask" NOT "Sub-task"
+createJiraIssue({
+  cloudId: "mindai.atlassian.net",
+  projectKey: "WAO",
+  issueTypeName: "Subtask",  // ⚠️ "Subtask" NOT "Sub-task"
   summary: "Subtask title",
   description: "Subtask description",
+  contentFormat: "markdown",
+  parent: "WAO-181",
   additional_fields: {
-    "parent": "WAO-181",  // ⚠️ String, NOT {"key": "WAO-181"}
-    "priority": {"name": "1"},  // 0=Blocker, 1=Critical, 2=High, 3=Medium
+    "priority": {"name": "1"},
     "duedate": "2026-02-10",
-    "customfield_10025": "2026-02-09"  // Start date
+    "customfield_10025": "2026-02-09"
   }
-})
-
-// Link issue to Epic (alternative to parent field)
-jira_link_to_epic({
-  issue_key: "WAO-181",
-  epic_key: "WAO-180"
 })
 
 // Add comment
-jira_add_comment({
-  issue_key: "WAO-180",
-  comment: "Comment in Markdown"
+addCommentToJiraIssue({
+  cloudId: "mindai.atlassian.net",
+  issueIdOrKey: "WAO-180",
+  commentBody: "Comment in Markdown",
+  contentFormat: "markdown"
 })
 
 // Update issue fields
-// ⚠️ DEFERRED TOOL: Must call ToolSearch("select:mcp__atlassian__jira_update_issue") first!
-jira_update_issue({
-  issue_key: "WAO-180",
+editJiraIssue({
+  cloudId: "mindai.atlassian.net",
+  issueIdOrKey: "WAO-180",
   fields: {
     "summary": "Updated title",
     "description": "Updated description"
-  }
+  },
+  contentFormat: "markdown"
 })
 ```
 
@@ -121,23 +128,48 @@ jira_update_issue({
 
 ```typescript
 // Get available transitions for issue
-jira_get_transitions({
-  issue_key: "WAO-180"
+getTransitionsForJiraIssue({
+  cloudId: "mindai.atlassian.net",
+  issueIdOrKey: "WAO-180"
 })
 
 // Transition issue to new status
-jira_transition_issue({
-  issue_key: "WAO-180",
-  transition_id: "31"  // Get ID from jira_get_transitions
+transitionJiraIssue({
+  cloudId: "mindai.atlassian.net",
+  issueIdOrKey: "WAO-180",
+  transition: { id: "31" }
 })
 ```
 
-### Metadata & Fields
+### Issue Links
 
 ```typescript
-// Search for field names/IDs
-jira_search_fields({
-  keyword: "epic"
+// Link two issues
+createIssueLink({
+  cloudId: "mindai.atlassian.net",
+  inwardIssue: "WAO-181",
+  outwardIssue: "WAO-180",
+  type: "Blocks"
+})
+
+// Get available link types
+getIssueLinkTypes({
+  cloudId: "mindai.atlassian.net"
+})
+```
+
+### Metadata & Discovery
+
+```typescript
+// List accessible projects
+getVisibleJiraProjects({
+  cloudId: "mindai.atlassian.net"
+})
+
+// Get issue types for project
+getJiraProjectIssueTypesMetadata({
+  cloudId: "mindai.atlassian.net",
+  projectIdOrKey: "WAO"
 })
 ```
 
@@ -158,98 +190,65 @@ assignee = currentUser() AND status != Done AND resolution = Unresolved
 
 # Recent issues (last 7 days)
 project = WAO AND created >= -7d ORDER BY created DESC
-
-# Issues updated today
-project = WAO AND updated >= startOfDay() ORDER BY updated DESC
 ```
 
 ## Token Efficiency Tips
 
-1. **Selective fields**: Only request needed fields in `jira_search`
+1. **Selective fields**: Only request needed fields (array format)
    ```typescript
-   fields: "summary,status"  // Good (comma-separated string)
-   // vs leaving empty (returns all fields)
+   fields: ["summary", "status"]  // Good
    ```
 
-2. **Limit results**: Use `limit` aggressively
+2. **Limit results**: Use `maxResults` aggressively
    ```typescript
-   limit: 5  // For user selection
-   limit: 1  // For "latest epic"
+   maxResults: 5   // For user selection
+   maxResults: 1   // For "latest epic"
    ```
 
-3. **JQL filtering**: Filter server-side, not client-side
-   ```typescript
-   // Good: Filter in JQL
-   jql: "project = WAO AND status = Open"
-
-   // Bad: Fetch all, filter locally
-   jql: "project = WAO"  // then filter in code
-   ```
+3. **Markdown format**: Use `responseContentFormat: "markdown"` for readable, compact output
 
 ## Error Handling
 
-- **401 Unauthorized**: API token invalid or expired → Regenerate at id.atlassian.com
+- **401/403**: OAuth token expired → Re-authenticate via plugin
 - **404 Not Found**: Issue doesn't exist or no permission
 - **400 Bad Request**: Check required fields for issue type
-- **"유효한 이슈 유형을 지정하세요"**: Wrong issue_type name. Use `"Subtask"` not `"Sub-task"`
-- **"expected 'key' property to be a string"**: parent field must be a string (`"WAO-180"`), not an object (`{"key": "WAO-180"}`)
-- **"No such tool available"**: Tool is deferred. Call `ToolSearch("select:mcp__atlassian__jira_update_issue")` first
-- **Large output**: Results exceed token limit → Reduce `limit` or field list
+- **"유효한 이슈 유형을 지정하세요"**: Wrong issueTypeName. Use `"Subtask"` not `"Sub-task"`
+- **"No such tool available"**: Tool is deferred. Call `ToolSearch("select:mcp__plugin_atlassian_atlassian__editJiraIssue")` first
 
 ## Deferred Tools
 
-Some Jira MCP tools are **deferred** and must be loaded via `ToolSearch` before use:
+All Atlassian plugin tools are deferred. Load via `ToolSearch` before first use:
 
 ```typescript
-// These tools require ToolSearch loading BEFORE first use:
-ToolSearch({ query: "select:mcp__atlassian__jira_update_issue" })   // Update issue fields
-ToolSearch({ query: "select:mcp__atlassian__jira_add_worklog" })    // Add work logs
-ToolSearch({ query: "select:mcp__atlassian__jira_get_transitions" }) // Get transitions
-
-// These tools are available immediately (not deferred):
-// jira_get_issue, jira_search, jira_create_issue, jira_create_issue_link, jira_add_comment
+ToolSearch({ query: "select:mcp__plugin_atlassian_atlassian__getJiraIssue" })
+ToolSearch({ query: "select:mcp__plugin_atlassian_atlassian__searchJiraIssuesUsingJql" })
+ToolSearch({ query: "select:mcp__plugin_atlassian_atlassian__createJiraIssue" })
+ToolSearch({ query: "select:mcp__plugin_atlassian_atlassian__editJiraIssue" })
+ToolSearch({ query: "select:mcp__plugin_atlassian_atlassian__addCommentToJiraIssue" })
+ToolSearch({ query: "select:mcp__plugin_atlassian_atlassian__transitionJiraIssue" })
+ToolSearch({ query: "select:mcp__plugin_atlassian_atlassian__getTransitionsForJiraIssue" })
 ```
 
 ## Workflow-Specific Patterns
 
 ### EpicToStory Workflow
 ```typescript
-// 1. Get epic (from boot context or user input)
-jira_get_issue({ issue_key: epicKey })
+// 1. Get epic
+getJiraIssue({ cloudId: "mindai.atlassian.net", issueIdOrKey: epicKey })
 
 // 2. Get existing stories to avoid duplicates
-jira_search({
+searchJiraIssuesUsingJql({
+  cloudId: "mindai.atlassian.net",
   jql: `parent = ${epicKey} AND type = Story`,
-  fields: "summary"
+  fields: ["summary"]
 })
 
-// 3. Create stories iteratively based on planning
-jira_create_issue({ ..., additional_fields: { "parent": epicKey } })  // String, NOT {"key": epicKey}
-```
-
-## Constants
-
-**Note:** These are examples for WAO project. Replace with your project's values.
-
-```typescript
-// Example: Replace with your project
-const PROJECT_KEY = "WAO"  // Your project key (e.g., "PROJ", "DEV")
-const PROJECT_NAME = "WG Agent Optimization"  // Your project name
-const USER_EMAIL = "user@example.com"  // Your Atlassian email
-
-// Common Issue Type Names (check your project's configuration)
-const ISSUE_TYPES = {
-  EPIC: "Epic",       // or "에픽" (Korean)
-  STORY: "Story",     // or "스토리"
-  SUBTASK: "Subtask", // ⚠️ NOT "Sub-task"
-  TASK: "Task"
-}
-
-// Common Status Names
-const STATUSES = {
-  OPEN: "Open",
-  IN_PROGRESS: "In Progress",
-  DONE: "Done",
-  TODO: "To Do"
-}
+// 3. Create stories iteratively
+createJiraIssue({
+  cloudId: "mindai.atlassian.net",
+  projectKey: "WAO",
+  issueTypeName: "Story",
+  summary: "Story title",
+  parent: epicKey
+})
 ```

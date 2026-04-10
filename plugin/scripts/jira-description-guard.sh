@@ -3,8 +3,8 @@
 # Validates subtask descriptions follow Context/Objective/Deliverables/AC template.
 # Fires on jira_update_issue and jira_create_issue when description field is present.
 #
-# Usage: PreToolUse hook with matcher "mcp__atlassian__jira_update_issue"
-#        PreToolUse hook with matcher "mcp__atlassian__jira_create_issue"
+# Usage: PreToolUse hook with matcher "mcp__plugin_atlassian_atlassian__editJiraIssue"
+#        PreToolUse hook with matcher "mcp__plugin_atlassian_atlassian__createJiraIssue"
 
 set -e
 
