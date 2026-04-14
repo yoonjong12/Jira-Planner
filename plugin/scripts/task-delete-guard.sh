@@ -1,8 +1,7 @@
 #!/bin/bash
-# Task Delete Guard
-# Blocks TaskUpdate(status=deleted) for active tasks during jira-planner workflow.
-# Allows deletion of completed tasks (checkpoint compaction).
-# Allows TaskUpdate(status=completed) with reminder to update status.md.
+# Task Delete Guard (advisory — never blocks)
+# Warns on deleting active tasks during jira-planner workflow.
+# Reminds to update status.md on task completion.
 #
 # Usage: PreToolUse hook with matcher "TaskUpdate"
 
@@ -52,12 +51,12 @@ if [ "$STATUS" = "deleted" ]; then
         exit 0
     fi
 
-    # Block deleting non-completed tasks
+    # Advisory: warn about deleting non-completed tasks
     jq -n '{
         hookSpecificOutput: {
             hookEventName: "PreToolUse",
-            permissionDecision: "deny",
-            permissionDecisionReason: "BLOCKED: Cannot delete active (non-completed) jira-planner tasks. Only completed tasks can be deleted during checkpoint compaction. If the task is done, set status to completed first."
+            permissionDecision: "allow",
+            permissionDecisionReason: "[JIRA-PLANNER] Warning: deleting active (non-completed) task. Consider setting status to completed first so checkpoint can track it."
         }
     }'
     exit 0

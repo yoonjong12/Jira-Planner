@@ -1,16 +1,7 @@
 {
-  "description": "Jira Planner guard hooks for workflow enforcement",
+  "description": "Jira Planner advisory hooks — never block, only inform",
   "hooks": {
     "PreToolUse": [
-      {
-        "matcher": "TaskCreate",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/subtask-to-nanotask-guard.sh"
-          }
-        ]
-      },
       {
         "matcher": "TaskUpdate",
         "hooks": [

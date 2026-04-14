@@ -25,18 +25,9 @@ if [ ! -f "$SETTINGS_FILE" ]; then
     echo '{"permissions": {"allow": []}}' > "$SETTINGS_FILE"
 fi
 
-# Hooks configuration
+# Hooks configuration (advisory — never block)
 HOOKS_CONFIG='{
   "PreToolUse": [
-    {
-      "matcher": "TaskCreate",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "$CLAUDE_PROJECT_DIR/scripts/subtask-to-nanotask-guard.sh"
-        }
-      ]
-    },
     {
       "matcher": "TaskUpdate",
       "hooks": [
@@ -51,7 +42,16 @@ HOOKS_CONFIG='{
       "hooks": [
         {
           "type": "command",
-          "command": "$CLAUDE_PROJECT_DIR/scripts/jira-creation-guard.sh"
+          "command": "$CLAUDE_PROJECT_DIR/scripts/jira-description-guard.sh"
+        }
+      ]
+    },
+    {
+      "matcher": "mcp__plugin_atlassian_atlassian__editJiraIssue",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "$CLAUDE_PROJECT_DIR/scripts/jira-description-guard.sh"
         }
       ]
     },
@@ -110,11 +110,10 @@ fi
 echo ""
 echo "Hooks installed successfully!"
 echo ""
-echo "Installed guardrails:"
-echo "  - TaskCreate guard: Blocks task creation without plan files (CP1)"
-echo "  - TaskUpdate guard: Blocks task deletion, reminds to update plan.md on completion"
-echo "  - Jira guard: Validates Jira description template (Context/Objective/Deliverables/AC)"
-echo "  - Format validator: Validates plan.md and nanotask plan file formats"
+echo "Installed advisory hooks (warn only, never block):"
+echo "  - TaskUpdate guard: Warns on deleting active tasks, reminds to update status.md"
+echo "  - Jira guard: Warns on missing description template (Context/Objective/Deliverables/AC)"
+echo "  - Format validator: Warns on malformed plan.md and nanotask files"
 echo ""
 echo "Note: Checkpoint is now a workflow (/jira-planner checkpoint), not a hook."
 echo ""

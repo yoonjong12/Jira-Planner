@@ -1,6 +1,6 @@
 #!/bin/bash
-# Plan File Format Validator
-# Validates plan.md, status.md, and nanotask plan files have required sections
+# Plan File Format Validator (advisory — never blocks)
+# Warns when plan.md, status.md, or nanotask plan files are missing required sections
 #
 # Usage: PreToolUse hook with matcher "Write"
 
@@ -44,8 +44,8 @@ if [[ "$FILE_PATH" == */plan.md ]]; then
         jq -n --arg missing "$MISSING" '{
             hookSpecificOutput: {
                 hookEventName: "PreToolUse",
-                permissionDecision: "deny",
-                permissionDecisionReason: ("plan.md validation failed. Missing sections:" + $missing + " See subtask_to_nanotask.md for required format.")
+                permissionDecision: "allow",
+                permissionDecisionReason: ("[JIRA-PLANNER] Advisory: plan.md missing sections:" + $missing + " Recommended: see subtask_to_nanotask.md for format.")
             }
         }'
         exit 0
@@ -63,8 +63,8 @@ if [[ "$FILE_PATH" == */status.md ]]; then
         jq -n --arg missing "$MISSING" '{
             hookSpecificOutput: {
                 hookEventName: "PreToolUse",
-                permissionDecision: "deny",
-                permissionDecisionReason: ("status.md validation failed. Missing:" + $missing + " See subtask_to_nanotask.md status.md Format.")
+                permissionDecision: "allow",
+                permissionDecisionReason: ("[JIRA-PLANNER] Advisory: status.md missing:" + $missing + " Recommended: see subtask_to_nanotask.md status.md Format.")
             }
         }'
         exit 0
@@ -81,8 +81,8 @@ if [[ "$FILE_PATH" =~ WAO-[0-9]+-[0-9]+\.md$ ]]; then
         jq -n --arg missing "$MISSING" --arg file "$(basename "$FILE_PATH")" '{
             hookSpecificOutput: {
                 hookEventName: "PreToolUse",
-                permissionDecision: "deny",
-                permissionDecisionReason: ("Nanotask plan file " + $file + " validation failed. Missing sections:" + $missing + " See subtask_to_nanotask.md for required format.")
+                permissionDecision: "allow",
+                permissionDecisionReason: ("[JIRA-PLANNER] Advisory: nanotask plan " + $file + " missing sections:" + $missing + " Recommended: see subtask_to_nanotask.md for format.")
             }
         }'
         exit 0

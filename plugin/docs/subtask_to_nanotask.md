@@ -18,12 +18,12 @@ Epic (WAO-180)
         └── Nanotask [docs]     WAO-264-4   ← CC Task (work item)
 ```
 
-### Blocking Rules
+### Checkpoints (advisory — never block)
 
 | CP | Gate | Verify |
 | --- | --- | --- |
 | CP1 | Plan files exist on disk | `ls space/{epic}/{story}/` shows plan.md + nanotask files |
-| CP2 | User says "Approve" | Block until explicit approval |
+| CP2 | User says "Approve" | Wait for explicit approval |
 | CP3 | TaskCreate called | Tasks visible in Claude Code |
 
 ### Routing
@@ -57,9 +57,9 @@ Never mix planning and implementation in one session.
 
 ## Formats
 
-### Jira Subtask Description (enforced by hook)
+### Jira Subtask Description (advisory hook)
 
-Every Jira subtask description MUST use this template. The `jira-description-guard.sh` hook blocks create/update without these 4 sections.
+Jira subtask descriptions should use this template. The `jira-description-guard.sh` hook warns if these 4 sections are missing.
 
 ```text
 h2. Context

@@ -1,7 +1,6 @@
 #!/bin/bash
-# Jira Description Template Guard
-# Validates subtask descriptions follow Context/Objective/Deliverables/AC template.
-# Fires on jira_update_issue and jira_create_issue when description field is present.
+# Jira Description Template Guard (advisory — never blocks)
+# Warns when subtask descriptions are missing Context/Objective/Deliverables/AC sections.
 #
 # Usage: PreToolUse hook with matcher "mcp__plugin_atlassian_atlassian__editJiraIssue"
 #        PreToolUse hook with matcher "mcp__plugin_atlassian_atlassian__createJiraIssue"
@@ -30,8 +29,8 @@ if [ -n "$MISSING" ]; then
     jq -n --arg missing "$MISSING" '{
         hookSpecificOutput: {
             hookEventName: "PreToolUse",
-            permissionDecision: "deny",
-            permissionDecisionReason: ("[JIRA-PLANNER] Jira description missing required sections: " + $missing + ". Template: h2. Context / h2. Objective / h2. Deliverables / h2. Acceptance Criteria")
+            permissionDecision: "allow",
+            permissionDecisionReason: ("[JIRA-PLANNER] Advisory: description missing sections: " + $missing + ". Recommended template: h2. Context / h2. Objective / h2. Deliverables / h2. Acceptance Criteria")
         }
     }'
     exit 0
