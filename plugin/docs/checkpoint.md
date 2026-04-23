@@ -10,6 +10,23 @@ User invokes `/jira-planner checkpoint` when ready to save session state.
 
 Write in importance order (smallest first = fail-safe).
 
+### Pre-check. Worktree verify (run before any write)
+
+A checkpoint written to the wrong worktree is worse than no checkpoint — it corrupts state in a repo the user isn't thinking about. Always confirm location before writing.
+
+```bash
+pwd
+git worktree list
+git status --short --branch
+```
+
+Verify:
+- `pwd` matches the intended project root for the active story
+- Current branch matches the story's working branch (check MEMORY.md Shortcuts or `plan.md`)
+- No uncommitted changes in paths unrelated to the checkpoint (MEMORY.md, status.md, nanotask files)
+
+If any mismatch, STOP. Surface the discrepancy to the user and ask which worktree is the correct target. Do not write.
+
 ### Step 0. Validate (read before write)
 
 Cross-check active files for consistency before saving. Read:
