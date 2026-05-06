@@ -82,7 +82,7 @@ Purpose: concise plan that lets a manager understand context, scope, and expecte
 ### File Structure
 
 ```text
-.claude/jira-planner/space/{epic-id}/{story-id}/
+$JIRA_PLANNER_SPACE_DIR/{epic-id}/{story-id}/
 ├── plan.md                    # Blueprint: objectives, nanotask definitions, decisions
 ├── status.md                  # Status tracker: nanotask current state (fast edit)
 ├── WAO-264-1.md               # Nanotask plan: subtask 264, nanotask 1
@@ -348,10 +348,10 @@ Task(Explore, prompt="""
 **Write all files:**
 
 ```text
-1. Bash("mkdir -p .claude/jira-planner/space/{epic-id}/{story-id}")
+1. Bash("mkdir -p $JIRA_PLANNER_SPACE_DIR/{epic-id}/{story-id}")
 2. Write plan.md (blueprint only — no Progress table)
 3. Write each {subtask-id}-{N}.md
-4. Bash("ls -la .claude/jira-planner/space/{epic}/{story}/")
+4. Bash("ls -la $JIRA_PLANNER_SPACE_DIR/{epic}/{story}/")
 ```
 
 **CP1 — files must exist on disk before proceeding.**

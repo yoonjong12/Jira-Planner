@@ -9,7 +9,7 @@ Plan Stories under an Epic with structured guidance.
 ## Storage
 
 ```text
-.claude/jira-planner/space/{epic-id}/
+$JIRA_PLANNER_SPACE_DIR/{epic-id}/
 ├── story.md                    # Story plans
 └── {story-id}-subtasks.md      # Optional subtask plans
 ```

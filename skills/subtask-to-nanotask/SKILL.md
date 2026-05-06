@@ -9,6 +9,6 @@ Also read:
 - `references/jira_commands.md` for MCP tool patterns
 - `references/plan_mode.md` for plan mode details (use markdown-reader for efficient reading)
 
-**Workspace:** `.claude/jira-planner/space/`
+**Workspace:** `$JIRA_PLANNER_SPACE_DIR` (env var from settings.json). Fallback: `.claude/jira-planner/space/`
 
 ARGUMENTS: $ARGUMENTS

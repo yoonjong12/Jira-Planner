@@ -129,6 +129,6 @@ Skill 파일을 완전히 삭제하려면:
 | Path | Reason |
 |------|--------|
 | `.claude/jira-planner/` | Skill files — 사용자가 수동 삭제 |
-| `.claude/jira-planner/space/` | 작업 계획 파일 — 수동 삭제 |
+| `$JIRA_PLANNER_SPACE_DIR` | 작업 계획 파일 — 수동 삭제 |
 | `.claude/settings.json` → non-jira-planner hooks | 다른 hook 보존 |
 | `.claude/settings.local.json` → non-jira deny rules | 다른 deny rule 보존 |

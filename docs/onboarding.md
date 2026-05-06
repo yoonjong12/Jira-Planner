@@ -17,7 +17,7 @@ MEMORY.md is auto-loaded in system prompt. Extract:
 active_story: {epic_key}/{story_key}
 ```
 
-Derive workspace path: `.claude/jira-planner/space/{epic_key}/{story_key}/`
+Derive workspace path: `$JIRA_PLANNER_SPACE_DIR/{epic_key}/{story_key}/`
 
 ### Step 2: Read plan.md
 

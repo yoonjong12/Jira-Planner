@@ -178,7 +178,7 @@ else
     echo ""
     echo "Remaining (not removed):"
     echo "  - .claude/jira-planner/ directory (skill files)"
-    echo "  - .claude/jira-planner/space/ (plan files)"
+    echo "  - \$JIRA_PLANNER_SPACE_DIR (plan files)"
     echo ""
     echo "To fully remove, delete the skill directory:"
     echo "  rm -rf .claude/jira-planner/"

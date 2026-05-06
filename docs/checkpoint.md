@@ -80,7 +80,7 @@ This is parsed by `/jira-planner:onboarding` to locate the workspace directory.
 ### Step 2. status.md
 
 Edit single rows — no full rewrite needed.
-Path: `.claude/jira-planner/space/{epic-id}/{story-id}/status.md`
+Path: `$JIRA_PLANNER_SPACE_DIR/{epic-id}/{story-id}/status.md`
 
 - Update Status column (`pending` → `in_progress` / `completed`)
 - Add commit Hash for completed nanotasks

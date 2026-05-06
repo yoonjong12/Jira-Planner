@@ -7,6 +7,6 @@ Read and follow the StoryToSubtask workflow at `docs/story_to_subtask.md` in thi
 
 Also read `references/jira_commands.md` for MCP tool patterns.
 
-**Workspace:** `.claude/jira-planner/space/`
+**Workspace:** `$JIRA_PLANNER_SPACE_DIR` (env var from settings.json). Fallback: `.claude/jira-planner/space/`
 
 ARGUMENTS: $ARGUMENTS

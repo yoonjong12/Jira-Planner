@@ -32,7 +32,7 @@ Epic > Story > Subtask > Nanotask (design / review / commit / docs)
 
 ## Workspace
 
-Planning data is stored project-locally at `.claude/jira-planner/space/`.
+Planning data is stored at `$JIRA_PLANNER_SPACE_DIR` (configured via settings.json env). Fallback: `.claude/jira-planner/space/`.
 
 ## Requirements
 

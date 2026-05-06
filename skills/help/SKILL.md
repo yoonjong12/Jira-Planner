@@ -38,4 +38,4 @@ allowed-tools: ""
 Epic > Story > Subtask > Nanotask (design / review / commit / docs)
 ```
 
-Workspace: `.claude/jira-planner/space/{epic}/{story}/`
+Workspace: `$JIRA_PLANNER_SPACE_DIR/{epic}/{story}/` (env var, fallback: `.claude/jira-planner/space/`)
