@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "jira-planner",
-      "source": "./plugin",
+      "source": "./",
       "description": "Jira workflow automation for Epic-Story-Subtask planning and tracking",
       "version": "1.0.3",
       "author": {

@@ -14,7 +14,7 @@ if [ "$TOOL_NAME" != "TaskCreate" ]; then
     exit 0
 fi
 
-SPACE_DIR="$CLAUDE_PROJECT_DIR/.claude/jira-planner/space"
+SPACE_DIR="${JIRA_PLANNER_SPACE_DIR:-$CLAUDE_PROJECT_DIR/.claude/jira-planner/space}"
 
 # No space directory at all — not in jira-planner workflow, allow
 if [ ! -d "$SPACE_DIR" ]; then

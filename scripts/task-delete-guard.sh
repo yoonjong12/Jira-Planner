@@ -21,8 +21,10 @@ if [ "$STATUS" != "deleted" ] && [ "$STATUS" != "completed" ]; then
     exit 0
 fi
 
-# Check if we're in a jira-planner workflow by looking for space/ directory
-SPACE_DIR="$CLAUDE_PROJECT_DIR/.claude/jira-planner/space"
+# Resolve space/ directory:
+# 1. $JIRA_PLANNER_SPACE_DIR (explicit override, absolute path)
+# 2. $CLAUDE_PROJECT_DIR/.claude/jira-planner/space (legacy default, relative to project)
+SPACE_DIR="${JIRA_PLANNER_SPACE_DIR:-$CLAUDE_PROJECT_DIR/.claude/jira-planner/space}"
 
 if [ ! -d "$SPACE_DIR" ]; then
     exit 0
